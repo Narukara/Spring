@@ -18,6 +18,11 @@ public class ConvolutionLayer extends Layer {
 	}
 
 	@Override
+	public double[][] getParameter() {
+		return new double[0][];
+	}
+
+	@Override
 	public double[] calculate(double[] input) throws InputMismatchException {
 		// TODO Auto-generated method stub
 		return null;
