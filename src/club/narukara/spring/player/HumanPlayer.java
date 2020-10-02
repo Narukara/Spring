@@ -29,4 +29,9 @@ public class HumanPlayer implements Player {
         return step;
     }
 
+    @Override
+    public void announce(Chessboard chessboard, int side) {
+        System.out.println("Result:\n" + chessboard.display(1, side));
+    }
+
 }

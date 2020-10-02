@@ -22,4 +22,9 @@ public class SpringCNN implements InheritablePlayer {
 		return null;
 	}
 
+	@Override
+	public void announce(Chessboard chessboard, int side) {
+
+	}
+
 }

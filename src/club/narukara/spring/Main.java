@@ -4,15 +4,15 @@ import club.narukara.spring.chessboard.Chessboard;
 import club.narukara.spring.match.MatchManager;
 import club.narukara.spring.player.*;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
-        MatchManager matchManager = new MatchManager(new HumanPlayer(), new RandomPlayer(), new Chessboard(), false);
+    public static void main(String[] args) throws IOException, InterruptedException {
+        MatchManager matchManager = new MatchManager(new HumanPlayer(), new OnlinePlayer(51234), new Chessboard(), false);
         matchManager.startMatch();
-        System.out.println(matchManager.getResult());
         matchManager.join();
         System.out.println(matchManager.getResult());
-
     }
 
 }

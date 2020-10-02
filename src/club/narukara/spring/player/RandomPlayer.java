@@ -18,6 +18,12 @@ public class RandomPlayer implements Player {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return new int[]{random.nextInt(4), random.nextInt(5)};
+        int[] size = chessboard.getSize();
+        return new int[]{random.nextInt(size[0]), random.nextInt(size[1])};
+    }
+
+    @Override
+    public void announce(Chessboard chessboard, int side) {
+
     }
 }

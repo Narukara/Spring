@@ -1,6 +1,8 @@
 package club.narukara.spring.match;
 
 import club.narukara.spring.chessboard.Chessboard;
+import club.narukara.spring.player.HumanPlayer;
+import club.narukara.spring.player.OnlinePlayer;
 import club.narukara.spring.player.Player;
 
 public class MatchThread extends Thread {
@@ -31,6 +33,8 @@ public class MatchThread extends Thread {
             if (display) System.out.println(chessboard.display(1, 1));
             if (chessboard.getWinner() != 0) break;
         }
+        player1.announce(chessboard, 1);
+        player2.announce(chessboard, -1);
     }
 
     // 0 -> not over

@@ -9,40 +9,65 @@ import java.net.Socket;
 import club.narukara.spring.chessboard.Chessboard;
 
 public class OnlinePlayer implements Player {
-	Player realPlayer;
-	ObjectInputStream objectInputStream;
-	ObjectOutputStream objectOutputStream;
+    private final ObjectInputStream objectInputStream;
+    private final ObjectOutputStream objectOutputStream;
 
-	public OnlinePlayer() {
-	}
+    public OnlinePlayer(int port) throws IOException {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            Socket socket = serverSocket.accept();
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            recycle();
+            throw e;
+        }
+    }
 
-	public void init(int port) throws IOException {
-		try (ServerSocket serverSocket = new ServerSocket(port)) {
-			Socket socket = serverSocket.accept();
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-		}
-	}
+    @Override
+    public int[] decide(Chessboard chessboard, int side) {
+        int[] step = new int[2];
+        try {
+            objectOutputStream.writeObject(chessboard);
+            objectOutputStream.writeInt(side);
+            objectOutputStream.flush();
+            objectOutputStream.reset();
+            step[0] = objectInputStream.readInt();
+            step[1] = objectInputStream.readInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+            recycle();
+            return new RandomPlayer().decide(chessboard, side);
+        }
+        return step;
+    }
 
-	@Override
-	public int[] decide(Chessboard chessboard, int side) {
-		int[] step = new int[2];
-		try {
-			objectOutputStream.writeObject(chessboard);
-			objectOutputStream.flush();
-			step[0] = objectInputStream.readInt();
-			step[1] = objectInputStream.readInt();
-		} catch (IOException e) {
-			e.printStackTrace();
-			try {
-				objectInputStream.close();
-				objectOutputStream.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			return null;
-		}
-		return step;
-	}
+    @Override
+    public void announce(Chessboard chessboard, int side) {
+        try {
+            objectOutputStream.writeObject(chessboard);
+            objectOutputStream.writeInt(side);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            recycle();
+        }
+    }
 
+    public void recycle() {
+        try {
+            if (objectOutputStream != null) {
+                objectOutputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (objectInputStream != null) {
+                objectInputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

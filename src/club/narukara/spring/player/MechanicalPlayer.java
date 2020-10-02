@@ -10,4 +10,9 @@ public class MechanicalPlayer implements Player {
 		return null;
 	}
 
+	@Override
+	public void announce(Chessboard chessboard, int side) {
+
+	}
+
 }
