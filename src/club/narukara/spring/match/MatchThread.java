@@ -1,8 +1,6 @@
 package club.narukara.spring.match;
 
 import club.narukara.spring.chessboard.Chessboard;
-import club.narukara.spring.player.HumanPlayer;
-import club.narukara.spring.player.OnlinePlayer;
 import club.narukara.spring.player.Player;
 
 public class MatchThread extends Thread {

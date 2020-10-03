@@ -12,7 +12,7 @@ public class Chessboard implements Serializable {
     private final int[][] steps;
     private final int[] size;
     private int next = 0, winner = 0;
-    private static final char[] num = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    private static final char[] num = {'1', '2', '3', '4', '5', '6', '7', '8'};
 
     public Chessboard() {
         size = new int[]{4, 5};
@@ -49,6 +49,10 @@ public class Chessboard implements Serializable {
 
     public int getWinner() {
         return winner;
+    }
+
+    public int[][] getLimit() {
+        return limit;
     }
 
     private static int getMax(int x, int y) {
@@ -183,16 +187,20 @@ public class Chessboard implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = Math.max(next - lastStep, 0); i < next; i++) {
             stringBuilder.append((steps[i][0] == side) ? "self" : "enemy").append(": ").append(steps[i][1] + 1).append(",").append(steps[i][2] + 1).append('\n');
-            stringBuilder.append("x 1 2 3 4 5\n");
+            stringBuilder.append("x ");
+            for (int j = 1; j <= size[1]; j++) {
+                stringBuilder.append(j).append(" ");
+            }
+            stringBuilder.append("\n");
             for (int x = 0; x < size[0]; x++) {
                 stringBuilder.append(x + 1).append(" ");
                 for (int y = 0; y < size[1]; y++) {
                     if (map[i][x][y][1] == 0) {
                         stringBuilder.append("  ");
                     } else if (map[i][x][y][1] == side) {
-                        stringBuilder.append(map[i][x][y][0]).append(" ");
+                        stringBuilder.append("\033[34m").append(map[i][x][y][0]).append("\033[0m").append(" ");
                     } else {
-                        stringBuilder.append(num[map[i][x][y][0] - 1]).append(" ");
+                        stringBuilder.append("\033[31m").append(num[map[i][x][y][0] - 1]).append("\033[0m").append(" ");
                     }
                 }
                 stringBuilder.append("\n");

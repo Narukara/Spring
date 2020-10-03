@@ -3,7 +3,7 @@ package club.narukara.spring.player;
 import java.util.InputMismatchException;
 import club.narukara.ann.Layer;
 
-public class ConvolutionLayer extends Layer {
+public class SpringANNLayer extends Layer {
 
 	@Override
 	public void mutate(double step) {

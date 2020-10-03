@@ -2,7 +2,7 @@ package club.narukara.spring.player;
 
 import club.narukara.spring.chessboard.Chessboard;
 
-public class SpringCNN implements InheritablePlayer {
+public class SpringANN implements InheritablePlayer {
 
 	@Override
 	public void mutate(double step) {

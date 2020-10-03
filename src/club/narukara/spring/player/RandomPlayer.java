@@ -13,11 +13,6 @@ public class RandomPlayer implements Player {
 
     @Override
     public int[] decide(Chessboard chessboard, int side) {
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         int[] size = chessboard.getSize();
         return new int[]{random.nextInt(size[0]), random.nextInt(size[1])};
     }
