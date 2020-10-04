@@ -34,8 +34,8 @@ public class OnlinePlayer implements Player {
             step[0] = objectInputStream.readInt();
             step[1] = objectInputStream.readInt();
         } catch (IOException e) {
-            e.printStackTrace();
             recycle();
+            chessboard.abort();
             return new RandomPlayer().decide(chessboard, side);
         }
         return step;
@@ -47,8 +47,7 @@ public class OnlinePlayer implements Player {
             objectOutputStream.writeObject(chessboard);
             objectOutputStream.writeInt(side);
             objectOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         } finally {
             recycle();
         }
@@ -59,15 +58,13 @@ public class OnlinePlayer implements Player {
             if (objectOutputStream != null) {
                 objectOutputStream.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         try {
             if (objectInputStream != null) {
                 objectInputStream.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 }

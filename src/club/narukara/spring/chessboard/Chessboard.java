@@ -32,7 +32,7 @@ public class Chessboard implements Serializable {
     }
 
     public int[][][] getMap(int which) {
-        return map[which];
+        return map[Math.max(which, 0)];
     }
 
     public int[] getSteps(int which) {
@@ -49,6 +49,10 @@ public class Chessboard implements Serializable {
 
     public int getWinner() {
         return winner;
+    }
+
+    public void abort() {
+        winner = -1;
     }
 
     public int[][] getLimit() {
@@ -186,7 +190,7 @@ public class Chessboard implements Serializable {
     public StringBuilder display(int lastStep, int side) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = Math.max(next - lastStep, 0); i < next; i++) {
-            stringBuilder.append((steps[i][0] == side) ? "self" : "enemy").append(": ").append(steps[i][1] + 1).append(",").append(steps[i][2] + 1).append('\n');
+            stringBuilder.append("Round ").append(i + 1).append(" ").append((steps[i][0] == side) ? "self" : "enemy").append(": ").append(steps[i][1] + 1).append(",").append(steps[i][2] + 1).append('\n');
             stringBuilder.append("x ");
             for (int j = 1; j <= size[1]; j++) {
                 stringBuilder.append(j).append(" ");

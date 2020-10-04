@@ -10,19 +10,6 @@ public class SearchTreePlayer implements Player {
     @Override
     public int[] decide(Chessboard chessboard, int side) {
         int[] size = chessboard.getSize();
-        if (chessboard.getNext() == 0) {
-            switch (new Random().nextInt(4)) {
-                case 0:
-                    return new int[]{0, 0};
-                case 1:
-                    return new int[]{0, size[1] - 1};
-                case 2:
-                    return new int[]{size[0] - 1, 0};
-                case 3:
-                    return new int[]{size[0] - 1, size[1] - 1};
-            }
-
-        }
         int[][][] map = chessboard.getMap(chessboard.getNext() - 1);
         int[][] limit = chessboard.getLimit();
 

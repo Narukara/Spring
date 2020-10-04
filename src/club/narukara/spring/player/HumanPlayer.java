@@ -23,7 +23,6 @@ public class HumanPlayer implements Player {
             System.out.print("y>>");
             step[1] = scanner.nextInt() - 1;
         } while (chessboard.add(step, side));
-
         System.out.println(chessboard.display(1, side));
         chessboard.undo();
         return step;
@@ -32,6 +31,7 @@ public class HumanPlayer implements Player {
     @Override
     public void announce(Chessboard chessboard, int side) {
         System.out.println("Result:\n" + chessboard.display(1, side));
+//        scanner.close();
     }
 
 }
